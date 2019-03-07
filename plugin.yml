@@ -1,7 +1,5 @@
-name: RWGTreeCutter
-author: YellowPhoenix18
-version: 0.2
-
 main: de.yellowphoenix18.rwgtreecutter.RWGTreeCutter
-
-commands:
+name: RWGTreeCutter
+author: StevenLPHD & YellowPhoenix18
+version: 1.0
+api-version: 1.13
