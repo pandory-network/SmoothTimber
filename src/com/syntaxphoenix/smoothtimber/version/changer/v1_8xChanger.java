@@ -15,12 +15,16 @@ public class v1_8xChanger implements VersionChanger {
 
 	@Override
 	public boolean hasCuttingItemInHand(Player player) {
-		return CutterConfig.cutterMaterials.contains(player.getItemInHand().getType().name());
+		return CutterConfig.cutterMaterials.contains(getItemInHand(player).getType().name());
 	}
 
 	@Override
 	public ItemStack removeDurabilityFromItem(ItemStack stack) {
-		stack.setDurability(Integer.valueOf(stack.getDurability() - 1).shortValue());
+		Integer dur = Integer.valueOf(stack.getDurability() - 1);
+		if(dur < 0) {
+			return null;
+		}
+		stack.setDurability(dur.shortValue());
 		return stack;
 	}
 
@@ -31,7 +35,7 @@ public class v1_8xChanger implements VersionChanger {
 
 	@Override
 	public boolean isWoodBlock(Block block) {
-		return block.getType().name().replace("_2", "").equals("LOG");
+		return (block.getType().name().replace("_2", "").equals("LOG") || block.getType() == Material.FENCE);
 	}
 
 	@Override
@@ -56,7 +60,7 @@ public class v1_8xChanger implements VersionChanger {
 			} else if (id == 3 || id == 7 || id == 11 || id == 15) {
 				type = WoodType.JUNGLE;
 			}
-		} else {
+		} else if(mat == Material.LOG_2) {
 			if (id == 1 || id == 3 || id == 5 || id == 7 || id == 9 || id == 11 || id == 13 || id == 15) {
 				type = WoodType.DARKOAK;
 			} else if (id == 0 || id == 2 || id == 4 || id == 6 || id == 8 || id == 10 || id == 12 || id == 14) {
@@ -65,7 +69,10 @@ public class v1_8xChanger implements VersionChanger {
 		}
 		return VersionExchanger.checkPermission(type, p);
 	}
-	
-	
+
+	@Override
+	public ItemStack getItemInHand(Player p) {
+		return p.getItemInHand();
+	}
 
 }

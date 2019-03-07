@@ -17,7 +17,7 @@ public class v1_13xChanger implements VersionChanger {
 
 	@Override
 	public boolean hasCuttingItemInHand(Player player) {
-		return CutterConfig.cutterMaterials.contains(player.getEquipment().getItemInMainHand().getType().name());
+		return CutterConfig.cutterMaterials.contains(getItemInHand(player).getType().name());
 	}
 
 	@Override
@@ -25,7 +25,11 @@ public class v1_13xChanger implements VersionChanger {
 		ItemMeta meta = stack.getItemMeta();
 		if(meta instanceof Damageable) {
 			Damageable dmg = (Damageable) meta;
-			dmg.setDamage(dmg.getDamage() + 1);
+			int damage = dmg.getDamage() + 1;
+			if(stack.getType().getMaxDurability() - damage < 0) {
+				return null;
+			}
+			dmg.setDamage(damage = dmg.getDamage() + 1);
 		}
 		stack.setItemMeta(meta);
 		return stack;
@@ -38,7 +42,7 @@ public class v1_13xChanger implements VersionChanger {
 
 	@Override
 	public boolean isWoodBlock(Block block) {
-		return (block.getBlockData().getMaterial().name().endsWith("_LOG") || block.getBlockData().getMaterial().name().endsWith("_WOOD"));
+		return (block.getBlockData().getMaterial().name().endsWith("_LOG") || block.getBlockData().getMaterial().name().endsWith("_WOOD") || block.getBlockData().getMaterial().name().endsWith("_FENCE"));
 	}
 
 	@Override
@@ -65,6 +69,11 @@ public class v1_13xChanger implements VersionChanger {
 			type = WoodType.ACACIA;
 		}
 		return VersionExchanger.checkPermission(type, p);
+	}
+
+	@Override
+	public ItemStack getItemInHand(Player p) {
+		return p.getEquipment().getItemInMainHand();
 	}
 
 }

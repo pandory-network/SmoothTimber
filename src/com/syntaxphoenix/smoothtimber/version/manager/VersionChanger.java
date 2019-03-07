@@ -18,4 +18,6 @@ public interface VersionChanger {
 
 	public boolean hasPermissionForWood(Player p, Block b);
 
+	public ItemStack getItemInHand(Player p);
+
 }
