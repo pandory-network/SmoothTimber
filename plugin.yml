@@ -1,0 +1,7 @@
+name: RWGTreeCutter
+author: YellowPhoenix18
+version: 0.2
+
+main: de.yellowphoenix18.rwgtreecutter.RWGTreeCutter
+
+commands:
