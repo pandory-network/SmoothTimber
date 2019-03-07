@@ -12,7 +12,7 @@ import com.syntaxphoenix.smoothtimber.utilities.PluginUtils;
 
 public class CutterConfig {
 	
-	private static File f = new File("plugins/RWGTreeCutter", "config.yml");
+	private static File f = new File("plugins/SmoothTimber", "config.yml");
 	private static FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
 	
 	public static boolean permissionsEnabled = false;
