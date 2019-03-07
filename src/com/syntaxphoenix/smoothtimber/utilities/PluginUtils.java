@@ -6,6 +6,7 @@ import org.bukkit.plugin.PluginManager;
 import com.syntaxphoenix.smoothtimber.SmoothTimber;
 import com.syntaxphoenix.smoothtimber.config.CutterConfig;
 import com.syntaxphoenix.smoothtimber.listener.BlockBreakListener;
+import com.syntaxphoenix.smoothtimber.stats.SyntaxPhoenixStats;
 import com.syntaxphoenix.smoothtimber.version.manager.VersionChanger;
 import com.syntaxphoenix.smoothtimber.version.manager.VersionExchanger;
 
@@ -16,6 +17,7 @@ public class PluginUtils {
 	public static PluginUtils utils;
 	public static SmoothTimber m;
 	public static VersionChanger changer;
+	public static SyntaxPhoenixStats stats;
 
 	public static void setUp(SmoothTimber main) {
 		m = main;
@@ -27,6 +29,7 @@ public class PluginUtils {
 		if (changer != null) {
 			CutterConfig.load();
 			registerListener();
+			stats = new SyntaxPhoenixStats("7vTfe4hf", SmoothTimber.m);
 		}
 	}
 
