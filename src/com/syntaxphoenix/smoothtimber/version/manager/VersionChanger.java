@@ -20,4 +20,6 @@ public interface VersionChanger {
 
 	public ItemStack getItemInHand(Player p);
 
+	public ItemStack getAirItem();
+
 }

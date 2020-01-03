@@ -18,16 +18,19 @@ public class v1_8xChanger implements VersionChanger {
 		return CutterConfig.cutterMaterials.contains(getItemInHand(player).getType().name());
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public ItemStack removeDurabilityFromItem(ItemStack stack) {
-		Integer dur = Integer.valueOf(stack.getDurability() - 1);
-		if(dur < 0) {
+		Integer dur = Integer.valueOf(stack.getDurability() + 1);
+		if(stack.getType().getMaxDurability() < dur) {
+			stack.setType(Material.AIR);
 			return null;
 		}
 		stack.setDurability(dur.shortValue());
 		return stack;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void setItemInPlayerHand(Player player, ItemStack stack) {
 		player.setItemInHand(stack);
@@ -35,12 +38,13 @@ public class v1_8xChanger implements VersionChanger {
 
 	@Override
 	public boolean isWoodBlock(Block block) {
-		return (block.getType().name().replace("_2", "").equals("LOG") || block.getType() == Material.FENCE);
+		return (block.getType().name().replace("_2", "").equals("LOG") || block.getType().name().equals("FENCE"));
 	}
 
 	@Override
 	public void setupConfig() {
-		CutterConfig.cutterMaterials.addAll(Lists.asList(Material.WOOD_AXE.name(), Material.STONE_AXE.name(), Material.IRON_AXE.name(), Material.GOLD_AXE.name(), Material.DIAMOND_AXE.name()));
+		CutterConfig.cutterMaterials.addAll(Lists.asList("WOOD_AXE", "STONE_AXE",
+				"IRON_AXE", "GOLD_AXE", "DIAMOND_AXE"));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -52,7 +56,7 @@ public class v1_8xChanger implements VersionChanger {
 		WoodType type = WoodType.OAK;
 		Material mat = b.getType();
 		int id = b.getData();
-		if (mat == Material.LOG) {
+		if (mat == Material.valueOf("LOG")) {
 			if (id == 1 || id == 5 || id == 9 || id == 13) {
 				type = WoodType.SPRUCE;
 			} else if (id == 2 || id == 6 || id == 10 || id == 14) {
@@ -60,7 +64,7 @@ public class v1_8xChanger implements VersionChanger {
 			} else if (id == 3 || id == 7 || id == 11 || id == 15) {
 				type = WoodType.JUNGLE;
 			}
-		} else if(mat == Material.LOG_2) {
+		} else if(mat == Material.valueOf("LOG_2")) {
 			if (id == 1 || id == 3 || id == 5 || id == 7 || id == 9 || id == 11 || id == 13 || id == 15) {
 				type = WoodType.DARKOAK;
 			} else if (id == 0 || id == 2 || id == 4 || id == 6 || id == 8 || id == 10 || id == 12 || id == 14) {
@@ -70,9 +74,15 @@ public class v1_8xChanger implements VersionChanger {
 		return VersionExchanger.checkPermission(type, p);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public ItemStack getItemInHand(Player p) {
 		return p.getItemInHand();
 	}
 
+	@Override
+	public ItemStack getAirItem() {
+		return new ItemStack(Material.AIR);
+	}
+	
 }

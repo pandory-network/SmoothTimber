@@ -37,9 +37,19 @@ public class PluginUtils {
 	 * 
 	 */
 
+	private void checkPlugins(PluginManager pm) {
+		if(pm.getPlugin("BlockyLog") != null) {
+			if(CutterConfig.extension_blocky) {
+				Locator.blockylog = true;
+			}
+		}
+	}
+
 	private void registerListener() {
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new BlockBreakListener(), SmoothTimber.m);
+		
+		checkPlugins(pm);
 	}
 
 	/*

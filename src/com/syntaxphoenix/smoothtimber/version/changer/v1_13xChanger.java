@@ -27,6 +27,7 @@ public class v1_13xChanger implements VersionChanger {
 			Damageable dmg = (Damageable) meta;
 			int damage = dmg.getDamage() + 1;
 			if(stack.getType().getMaxDurability() - damage < 0) {
+				stack.setType(Material.AIR);
 				return null;
 			}
 			dmg.setDamage(damage = dmg.getDamage() + 1);
@@ -47,7 +48,8 @@ public class v1_13xChanger implements VersionChanger {
 
 	@Override
 	public void setupConfig() {
-		CutterConfig.cutterMaterials.addAll(Lists.asList(Material.WOODEN_AXE.name(), Material.STONE_AXE.name(), Material.IRON_AXE.name(), Material.GOLDEN_AXE.name(), Material.DIAMOND_AXE.name()));
+		CutterConfig.cutterMaterials.addAll(Lists.asList("WOODEN_AXE", "STONE_AXE",
+				"IRON_AXE", "GOLDEN_AXE", "DIAMOND_AXE"));
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class v1_13xChanger implements VersionChanger {
 			type = WoodType.JUNGLE;
 		} else if(mat.startsWith("SPRUCE_")) {
 			type = WoodType.SPRUCE;
-		} else if(mat.startsWith("DARK_")) {
+		} else if(mat.startsWith("DARK_OAK_")) {
 			type = WoodType.DARKOAK;
 		} else if(mat.startsWith("ACACIA_")) {
 			type = WoodType.ACACIA;
@@ -74,6 +76,11 @@ public class v1_13xChanger implements VersionChanger {
 	@Override
 	public ItemStack getItemInHand(Player p) {
 		return p.getEquipment().getItemInMainHand();
+	}
+
+	@Override
+	public ItemStack getAirItem() {
+		return new ItemStack(Material.AIR);
 	}
 
 }

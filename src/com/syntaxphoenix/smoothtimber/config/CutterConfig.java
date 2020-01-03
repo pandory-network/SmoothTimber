@@ -15,11 +15,15 @@ public class CutterConfig {
 	private static File f = new File("plugins/SmoothTimber", "config.yml");
 	private static FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
 	
+	public static boolean extension_blocky = true;
 	public static boolean permissionsEnabled = false;
+	public static boolean onSneak = false;
 	public static List<String> cutterMaterials = new ArrayList<>();
 	
 	public static void load() {
 		PluginUtils.changer.setupConfig();
+		extension_blocky = check("Extensions.BlockyLog", extension_blocky);
+		onSneak = check("Cutter.onlyWhileSneaking", onSneak);
 		permissionsEnabled = check("Cutter.enablePermissions", permissionsEnabled);
 		cutterMaterials = check("Cutter.AxeMaterials", cutterMaterials);
 	}
