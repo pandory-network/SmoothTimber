@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.syntaxphoenix.smoothtimber.SmoothTimber;
 import com.syntaxphoenix.smoothtimber.config.CutterConfig;
 import com.syntaxphoenix.smoothtimber.utilities.Locator;
 import com.syntaxphoenix.smoothtimber.utilities.PluginUtils;
@@ -39,7 +40,7 @@ public class BlockBreakListener implements Listener {
 				Bukkit.getScheduler().runTaskAsynchronously(PluginUtils.m, new Runnable() {
 					@Override
 					public void run() {
-						List<Location> woodBlocks = new ArrayList<>();
+						ArrayList<Location> woodBlocks = new ArrayList<>();
 						Location bl = l;
 						for (int y = 0;; y++) {
 							List<Location> located = Locator.locateWood(
@@ -49,6 +50,9 @@ public class BlockBreakListener implements Listener {
 								break;
 							}
 							woodBlocks.addAll(located);
+						}
+						if(SmoothTimber.triggerChopEvent(p, l, change, tool, woodBlocks)) {
+							return;
 						}
 						Bukkit.getScheduler().runTask(PluginUtils.m, new Runnable() {
 							@Override
